@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.1.2 - 2026-02-24
+
+### What's Changed
+
+- Add Laravel 13.x support in composer.json and CI test matrix
+- Add orchestra/testbench ^11.0 for Laravel 13 testing
+
 ## v1.1.1 - 2025-03-03
 
 **Full Changelog**: https://github.com/jeffersongoncalves/laravel-created-by/compare/v1.1.0...v1.1.1
