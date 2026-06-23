@@ -13,7 +13,7 @@ class DeletedByScope implements Scope
     public function extend(Builder $builder): void
     {
         $builder->macro('deletedBy', function (Builder $builder, $value) {
-            return $builder->where('deleted_by', $value);
+            return $builder->where(config('created-by.columns.deleted_by', 'deleted_by'), $value);
         });
         $builder->macro('withDeletedBy', function (Builder $builder) {
             return $builder->with('deletedBy');

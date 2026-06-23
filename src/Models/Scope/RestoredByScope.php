@@ -13,7 +13,7 @@ class RestoredByScope implements Scope
     public function extend(Builder $builder): void
     {
         $builder->macro('restoredBy', function (Builder $builder, $value) {
-            return $builder->where('restored_by', $value);
+            return $builder->where(config('created-by.columns.restored_by', 'restored_by'), $value);
         });
         $builder->macro('withRestoredBy', function (Builder $builder) {
             return $builder->with('restoredBy');

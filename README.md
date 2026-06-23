@@ -44,11 +44,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use JeffersonGoncalves\CreatedBy\WithCreatedBy;
-use JeffersonGoncalves\CreatedBy\WithUpdatedBy;
-use JeffersonGoncalves\CreatedBy\WithDeletedBy;
-use JeffersonGoncalves\CreatedBy\WithRestoredBy;
-use JeffersonGoncalves\CreatedBy\WithRestoredAt;
+use JeffersonGoncalves\CreatedBy\Models\Concerns\WithCreatedBy;
+use JeffersonGoncalves\CreatedBy\Models\Concerns\WithUpdatedBy;
+use JeffersonGoncalves\CreatedBy\Models\Concerns\WithDeletedBy;
+use JeffersonGoncalves\CreatedBy\Models\Concerns\WithRestoredBy;
+use JeffersonGoncalves\CreatedBy\Models\Concerns\WithRestoredAt;
 
 class Post extends Model
 {
@@ -59,6 +59,50 @@ class Post extends Model
     use WithRestoredBy;
     use WithRestoredAt;
 }
+```
+
+## Configuration
+
+You can publish the config file with:
+
+```bash
+php artisan vendor:publish --tag="created-by-config"
+```
+
+This is the contents of the published config file:
+
+```php
+return [
+    // The authentication guard used to resolve the current user (null = default guard).
+    'guard' => null,
+
+    // The column names used to store the audit information.
+    'columns' => [
+        'created_by' => 'created_by',
+        'updated_by' => 'updated_by',
+        'deleted_by' => 'deleted_by',
+        'restored_by' => 'restored_by',
+        'restored_at' => 'restored_at',
+    ],
+];
+```
+
+## Query Macros
+
+Each trait registers query builder macros so you can filter and eager load by the audit columns:
+
+```php
+// Filter by the user id stored in the column
+Post::query()->createdBy($userId)->get();
+Post::query()->updatedBy($userId)->get();
+Post::query()->deletedBy($userId)->get();
+Post::query()->restoredBy($userId)->get();
+
+// Eager load the related user relationship
+Post::query()->withCreatedBy()->get();
+Post::query()->withUpdatedBy()->get();
+Post::query()->withDeletedBy()->get();
+Post::query()->withRestoredBy()->get();
 ```
 
 ## Testing

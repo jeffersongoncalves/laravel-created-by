@@ -13,7 +13,7 @@ class CreatedByScope implements Scope
     public function extend(Builder $builder): void
     {
         $builder->macro('createdBy', function (Builder $builder, $value) {
-            return $builder->where('created_by', $value);
+            return $builder->where(config('created-by.columns.created_by', 'created_by'), $value);
         });
         $builder->macro('withCreatedBy', function (Builder $builder) {
             return $builder->with('createdBy');
